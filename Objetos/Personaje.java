@@ -3,9 +3,15 @@ package Objetos;
 import java.awt.*;
 
 public class Personaje {
-    float x = 40, y = 280, alto = y - 120, piso = 280;
-    int vx, vy;
-    boolean derecha = false, izquierda = false, grav = true, sal = false, suelo = false;
+    float x = 40;
+    public float y = 280;
+    float alto = y - 120;
+    public float piso = (float) 281;
+    public static int vx;
+    public static int vy;
+    boolean derecha = false, izquierda = false, grav = true, sal = false;
+    public boolean suelo = false;
+    public boolean gravedad;
 
     public void paint(Graphics g) {
         vx = (int) x;
@@ -17,6 +23,7 @@ public class Personaje {
         gravedad();
         saltar();
         suelo();
+        rectangulo();
     }
 
     public void keyPressed(java.awt.event.KeyEvent e) {
@@ -79,6 +86,10 @@ public class Personaje {
         if (suelo) {
             grav = false;
         }
+    }
+
+    public Rectangle rectangulo() {
+        return new Rectangle(vx, vy, 20, 20);
     }
 
 }

@@ -1,18 +1,23 @@
 package Plataformas;
 
 import javax.swing.JLabel;
+
+// import Clases.Colores;
 import Objetos.Personaje;
 import java.awt.*;
 import java.math.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+
 public class Nivel1 extends JLabel {
     float x = 0, y = 300;
     int vx, vy;
+
     Boolean ida = true, vuelta = false, pcuarto = true, scuarto = false; 
     // estas son las fases o estapas que se hacen en el recorrido de media luna del cuadadrado del nivel
     Personaje per = new Personaje();
+    // Colores color = new Colores();
 
     public Nivel1() {
         addKeyListener(new KeyListener() {
@@ -33,7 +38,40 @@ public class Nivel1 extends JLabel {
             }
         });
         setFocusable(true);
+        // addMouseListener(new MouseListener() {
+
+            // @Override
+            // public void mouseClicked(MouseEvent e) {
+                // color.mouseClicked(e);                
+            // }
+
+            // @Override
+            // public void mouseEntered(MouseEvent e) {
+                // TODO Auto-generated method stub
+                
+            // }
+
+            // @Override
+            // public void mouseExited(MouseEvent e) {
+                // TODO Auto-generated method stub
+                
+            // }
+
+            // @Override
+            // public void mousePressed(MouseEvent e) {
+                // TODO Auto-generated method stub
+                
+            // }
+
+            // @Override
+            // public void mouseReleased(MouseEvent e) {
+                // TODO Auto-generated method stub
+                
+            // }
+
+        // });
     }
+
 
     public void paint(Graphics g) {
         vx = (int) x;
@@ -46,12 +84,16 @@ public class Nivel1 extends JLabel {
         g.fillRect(400,300,50,50);
         g.fillRect(vx, vy, 50, 50);
         per.paint(g);
+        // color.color();}
         Circulo();
         // System.out.println("x= " + x);
         // System.out.println("y= " + y);
+        if (per.rectangulo().intersects(Circulo())){
+            System.out.println("colicion");
+        }
     }
 
-    public void Circulo() {
+    public Rectangle Circulo() {
         // algo importante en la funcion original
         // x = -raiz(-(y+150)*(y+450))+400
         // declaro a y con un valor positivo y en la formula le doy un valor negativo
@@ -63,7 +105,7 @@ public class Nivel1 extends JLabel {
             if (pcuarto) {
                 x = (float) -Math.sqrt(-(-y + 150) * (-y + 450)) + 400;
                 // utilizo esta formula si se evalua en una grafica da como resultado un circulo. 
-                y += .2;
+                y += .05;
                 if (y > 450) {
                     scuarto=true;
                     pcuarto=false;
@@ -71,7 +113,7 @@ public class Nivel1 extends JLabel {
             }
             if (scuarto) {
                 x = (float) Math.sqrt(-(-y + 150) * (-y + 450)) + 400;
-                y -= .2;
+                y -= .05;
                 if (y < 300) {
                     // como solo deseo que se dibuje una media luna, cuando llegue a la mitad hago a la variable 
                     // ida falsa y vuelta verdadera
@@ -84,7 +126,7 @@ public class Nivel1 extends JLabel {
         if (vuelta) {
             if (pcuarto) {
                 x = (float) -Math.sqrt(-(-y + 150) * (-y + 450)) + 400;
-                y -= .2;
+                y -= .05;
                 if (y < 300) {
                     vuelta=false;
                     ida=true;
@@ -92,12 +134,21 @@ public class Nivel1 extends JLabel {
             }
             if (scuarto) {
                 x = (float) Math.sqrt(-(-y + 150) * (-y + 450)) + 400;
-                y += .2;
+                y += .05;
                 if (y > 450) {
                     scuarto = false;
                     pcuarto = true;
                 }
             }
-        }
+        }   
+        
+    // public ArrayList<Rectangle> obtieneCajaLluvia() {
+        // ArrayList<Rectangle> arreglo = new ArrayList<>();
+        // for (int i = 0; i < arrayY.size(); i++) {
+            // arreglo.add(new Rectangle(x, arrayY.get(i) + y, 100, 100));
+        // }
+        // return arreglo;
+        return new Rectangle(vx, vy,50,50); 
+        // creo un objeto de tipo rectangulo que en cada actualizacion me retorna la ubicacion de la plataforma
     }
 }
